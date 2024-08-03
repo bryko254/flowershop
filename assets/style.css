@@ -60,12 +60,12 @@ body {
 }
 
 .about {
-    height: 105vh;
-    background-image: linear-gradient(rgba(46, 78, 42, 0.8), rgba(46, 78, 42, 0.8)), url(https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/flowers-pattern.jpg);
+    background-image: linear-gradient(rgba(46, 78, 42, 0.4), rgba(46, 78, 42, 0.4)), url(./Lilac-Pattern-01.jpg);
     background-position: center;
     background-repeat: repeat-x;
     background-size: contain;
     color: #fff;
+    padding-bottom: 5%;
 }
 
 .servicesbtn {
@@ -76,22 +76,431 @@ body {
     border-radius: 20px; /* Adjust this value to your preference */
     border: none;
 }
-.card-body{
-    background-color: rgb(25 135 84);
+
+.card-body {
+    background-color: #871d82;
     border: none;
 }
 
-.card {
-    border-radius: 20px !important; /* Ensure the border-radius is applied */
-}
-
 .card img {
-    border-top-left-radius: 20px !important; /* Ensure the border-radius is applied to the images */
-    border-top-right-radius: 20px !important; /* Ensure the border-radius is applied to the images */
-   
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
 }
 
 .card-body {
-    border-bottom-left-radius: 20px !important; /* Ensure the border-radius is applied to the card body */
-    border-bottom-right-radius: 20px !important; /* Ensure the border-radius is applied to the card body */
+    border-bottom-left-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
 }
+
+.categories {
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-products {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.semi-title {
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.plant-card,
+.featured-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5%;
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Adjusted duration for smoother entrance */
+    transform: translateY(30px); /* Start 30px lower */
+    opacity: 0; /* Start hidden */
+}
+
+.plant-card:focus,
+.plant-card:hover,
+.featured-card:focus,
+.featured-card:hover {
+    outline: none; /* Remove focus outline */
+    transform: scale(1.05) translateY(0); /* Slight enlargement on hover/focus */
+}
+
+.plant-image,
+.featured-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 15px;
+}
+
+.plant-info,
+.featured-info {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background-color: rgb(3, 96, 3);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.featured-info {
+    position: relative; /* Override position for featured info to fit better */
+    bottom: 0;
+    left: 0;
+    background-color: #871d82; /* Match card-body color */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 0 0 15px 15px;
+}
+
+.featured-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.featured-info p {
+    font-size: 0.9rem;
+    color: #f1f1f1;
+    margin-bottom: 1rem;
+}
+
+.order-btn {
+    background-color: #198754;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 20px;
+}
+
+.order-btn:hover {
+    background-color: #155d42;
+    transform: scale(1.05);
+}
+
+.all-products-btn {
+    border: 2px solid #198754;
+    color: #198754;
+    font-weight: bold;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.all-products-btn:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.visible {
+    transform: translateY(0) scale(1); /* Move to normal position */
+    opacity: 1; /* Fade in */
+    transition: transform 1s ease-out, opacity 1s ease-out; /* Smooth transition for entrance */
+}
+
+.marketing-vid {
+    position: relative; /* Ensure the section covers full height and width */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    overflow: hidden; /* Hide overflow to maintain a clean edge */
+}
+
+.video-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover entire section */
+    filter: brightness(70%); /* Darken for better overlay contrast */
+    transition: filter 0.3s ease;
+}
+
+.play-btn {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 4rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.play-btn:hover {
+    color: #198754; /* Hover color effect */
+}
+
+.blog {
+    background-color: #f9f9f9; /* Light grey background for the blog section */
+    padding: 50px 0;
+}
+
+.blog h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.blog-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.blog-card:hover {
+    transform: scale(1.05);
+}
+
+.blog-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.blog-category {
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.blog-title {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.blog-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.blog-author {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.author-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author-name {
+    font-size: 0.85rem;
+    color: #333;
+}
+
+.all-posts-btn {
+    border: 2px solid #198754;
+    color: #198754;
+    font-weight: bold;
+    background-color: transparent;
+    padding: 8px 16px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.all-posts-btn:hover {
+    background-color: #198754;
+    color: white;
+}
+
+.newsletter {
+    background-image: url('https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/hero2.jpeg'); /* Replace with your image */
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.newsletter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    z-index: 1;
+}
+
+.newsletter .container {
+    position: relative;
+    z-index: 2;
+}
+
+.newsletter-content {
+    color: #fff;
+}
+
+.newsletter-btn {
+    background-color: #f1c40f; /* Yellow background */
+    color: #000; /* Black text */
+    border-radius: 20px;
+    font-weight: bold;
+    padding: 8px 20px;
+}
+
+.newsletter-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.newsletter-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.newsletter-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.email-input {
+    border-radius: 50px 0 0 50px;
+    padding: 10px 20px;
+    border: none;
+    flex: 1;
+    min-width: 200px;
+}
+
+.subscribe-btn {
+    border-radius: 0 50px 50px 0;
+    padding: 10px 30px;
+    background-color: #198754;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.subscribe-btn:hover {
+    background-color: #155d42;
+}
+
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 60px 0;
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+.footer ul li a {
+    color: #b0b0b0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer ul li a:hover {
+    color: #fff;
+}
+
+.payment-icons i {
+    color: #b0b0b0;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.payment-icons i:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    background-color: #333;
+    padding: 20px 0;
+    color: #b0b0b0;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: #b0b0b0;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #fff;
+}
+
+/* Optional: styles for a back-to-top button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top:hover {
+    background-color: #198754;
+}
+

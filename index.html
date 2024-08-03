@@ -1,17 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flowers Template</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Added CSS for video section to occupy half the viewport height */
+        .marketing-vid {
+            position: relative;
+            height: 50vh; /* Half viewport height */
+            overflow: hidden; /* Hide overflow to ensure clean edges */
+        }
+
+        .video-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover entire section */
+            filter: brightness(70%); /* Darken for better overlay contrast */
+            transition: filter 0.3s ease;
+        }
+
+        .play-btn {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 4rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .play-btn:hover {
+            color: #198754; /* Hover color effect */
+        }
+
+        body {
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        .modal-dialog {
+            max-width: 90%; /* Ensure the modal doesn't exceed screen width */
+            width: auto;
+        }
+
+        .embed-responsive {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .embed-responsive::before {
+            display: block;
+            content: "";
+        }
+
+        .embed-responsive-16by9::before {
+            padding-top: 56.25%;
+        }
+
+        .embed-responsive-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            border: 0;
+        }
+
+        .marketing-vid {
+        position: relative;
+        height: 50vh; /* Half viewport height */
+        overflow: hidden;
+    }
+
+    .video-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .video-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover entire section */
+        filter: brightness(70%); /* Darken for better overlay contrast */
+        transition: filter 0.3s ease;
+    }
+
+    .play-btn {
+        position: absolute; /* Ensures the button is positioned over the image */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centers the button */
+        color: white; /* White color for visibility */
+        font-size: 4rem; /* Size of the icon */
+        cursor: pointer; /* Pointer cursor for interactiveness */
+        transition: color 0.3s ease;
+        z-index: 10; /* Ensures the button appears above the video thumbnail */
+        display: flex; /* Ensures flex display for better alignment */
+        align-items: center; /* Centers content vertically */
+        justify-content: center; /* Centers content horizontally */
+        background-color: rgba(0, 0, 0, 0.5); /* Optional: adds a semi-transparent background to the button */
+        border-radius: 50%; /* Makes the play button circular */
+        padding: 20px; /* Adds padding for larger clickable area */
+    }
+
+    .play-btn:hover {
+        color: #198754; /* Hover color effect */
+    }
+
+    </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
             <a class="navbar-brand" href="#">Flowers Template</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -44,7 +164,8 @@
             <div class="text-center text-white herosct">
                 <button class="btn btn-warning mb-3 herobtn">New Collection</button>
                 <h1>Beautiful <span class="text-warning"><em>plants</em></span> <br />For Your Interior</h1>
-                <p class="mt-3">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur magni dolores eosqui.</p>
+                <p class="mt-3">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia
+                    consequuntur magni dolores eosqui.</p>
             </div>
         </section>
 
@@ -59,50 +180,466 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/1.png" class="card-img-top img-fluid" alt="Card Image 1">
+                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/1.png"
+                            class="card-img-top img-fluid" alt="Card Image 1">
                         <div class="card-body">
                             <h5 class="card-title">Card Title 1</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/2.png" class="card-img-top" alt="Card Image 2">
+                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/2.png"
+                            class="card-img-top" alt="Card Image 2">
                         <div class="card-body">
                             <h5 class="card-title">Card Title 2</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/3.png" class="card-img-top" alt="Card Image 3">
+                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/3.png"
+                            class="card-img-top" alt="Card Image 3">
                         <div class="card-body">
                             <h5 class="card-title">Card Title 3</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png" class="card-img-top" alt="Card Image 4">
+                        <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                            class="card-img-top" alt="Card Image 4">
                         <div class="card-body">
                             <h5 class="card-title">Card Title 4</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <section class="categories">
+            <p class="semi-title">CHECKOUT OUR CATEGORIES</p>
+            <h1>Plants by <em style="color: #198754;">styles</em></h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="plant-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
+                                alt="Cafe Plants" class="plant-image">
+                            <div class="plant-info">
+                                <h3 class="mb-1">Cafe Plants</h3>
+                                <p class="mb-0">28 Items</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="featured-products">
+            <p class="semi-title">Our Products</p>
+            <h1>Featured <em style="color: #198754;">Products</em></h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/1.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 1</h3>
+                                <p class="mb-0">This is a great product that will add life to your interior.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/2.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 2</h3>
+                                <p class="mb-0">Bring a touch of nature with this beautiful plant.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/3.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 3</h3>
+                                <p class="mb-0">This plant is perfect for any home or office decor.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 4</h3>
+                                <p class="mb-0">Add greenery to your space with this vibrant plant.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 5</h3>
+                                <p class="mb-0">Brighten up any room with this stunning plant.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="featured-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                                alt="Featured Product" class="featured-image">
+                            <div class="featured-info">
+                                <h3 class="mb-1">Featured Product 6</h3>
+                                <p class="mb-0">A beautiful addition to any garden or indoor space.</p>
+                                <button class="btn btn-success order-btn mt-2">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add the "All Products" button -->
+                <div class="row justify-content-center mt-4">
+                    <div class="col-auto">
+                        <button class="btn all-products-btn">ALL PRODUCTS</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Marketing Video Section Covering Half Area -->
+        <section class="marketing-vid">
+            <div class="video-wrapper position-relative">
+                <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/video.jpg" alt="Gardening"
+                    class="img-fluid video-thumbnail">
+                <a href="#" class="play-btn position-absolute" data-toggle="modal" data-target="#videoModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor"
+                        class="bi bi-play-circle" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
+                        <path d="M6.271 5.055A.5.5 0 0 1 7 5.5v5a.5.5 0 0 1-.759.429l-3-2.5a.5.5 0 0 1 0-.858l3-2.5z" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+         <!-- Blog Section -->
+         <section class="blog">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Latest From Our Blog</h2>
+                    <button class="btn all-posts-btn">All Posts</button>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="blog-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/blog/blog-1.jpg" alt="Blog Image" class="blog-image">
+                            <div class="blog-content">
+                                <p class="blog-category">NATURE</p>
+                                <h3 class="blog-title">Quis Blandit Turpis Cursus Habitasse</h3>
+                                <p class="blog-text">Volutpat odio facilisis mauris sit amet massa vitae tortor. Semper risus in...</p>
+                                <div class="blog-author">
+                                    <img src="https://via.placeholder.com/40" alt="Author" class="author-image">
+                                    <p class="author-name">Patricia Clarks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="blog-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/blog/blog-1.jpg" alt="Blog Image" class="blog-image">
+                            <div class="blog-content">
+                                <p class="blog-category">INTERIOR</p>
+                                <h3 class="blog-title">Pharetra Eutltrices Neque Ornare Aenean</h3>
+                                <p class="blog-text">Cras adipiscing enim eu turpis egestas pretium aenean pharetra. Quam id leo...</p>
+                                <div class="blog-author">
+                                    <img src="https://via.placeholder.com/40" alt="Author" class="author-image">
+                                    <p class="author-name">John Doe</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="blog-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/blog/blog-1.jpg" alt="Blog Image" class="blog-image">
+                            <div class="blog-content">
+                                <p class="blog-category">NATURE</p>
+                                <h3 class="blog-title">Cras Semper Auctor Neque Vitae</h3>
+                                <p class="blog-text">Diam phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet. Nisl nisi...</p>
+                                <div class="blog-author">
+                                    <img src="https://via.placeholder.com/40" alt="Author" class="author-image">
+                                    <p class="author-name">Patricia Clarks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="blog-card">
+                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/blog/blog-1.jpg" alt="Blog Image" class="blog-image">
+                            <div class="blog-content">
+                                <p class="blog-category">INTERIOR</p>
+                                <h3 class="blog-title">Imperdiet Accumsan Sitamet Nulla</h3>
+                                <p class="blog-text">Quis vel eros donec ac. Nulla pharetra diam sit amet. Eget nunc...</p>
+                                <div class="blog-author">
+                                    <img src="https://via.placeholder.com/40" alt="Author" class="author-image">
+                                    <p class="author-name">Patricia Clarks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content text-center">
+                    <button class="btn newsletter-btn mb-3">Our Newsletter</button>
+                    <h2 class="newsletter-title">Enter your email address to be updated with fresh news</h2>
+                    <p class="newsletter-subtitle">Receive emails updates and hot offers</p>
+                    <form class="newsletter-form d-flex justify-content-center align-items-center">
+                        <input type="email" class="form-control email-input" placeholder="Email address" required>
+                        <button type="submit" class="btn btn-success subscribe-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5>Company</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5>Account</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">My Wishlist</a></li>
+                            <li><a href="#">My Cart</a></li>
+                            <li><a href="#">Sign In</a></li>
+                            <li><a href="#">Specials</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5>Contact us</h5>
+                        <ul class="list-unstyled">
+                            <li>Phone: +1800-964-152</li>
+                            <li>Fax: +1800-964-152</li>
+                            <li>Mail: example@gmail.com</li>
+                            <li>9016 Goldfield Street<br>South Richmond Hill, New York 11419</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h5>Shipping and Payments</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Manufactures</a></li>
+                            <li><a href="#">Suppliers</a></li>
+                        </ul>
+                        <h5 class="mt-4">Payment Methods</h5>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-paypal fa-2x"></i>
+                            <i class="fab fa-cc-visa fa-2x"></i>
+                            <i class="fab fa-cc-mastercard fa-2x"></i>
+                            <i class="fab fa-cc-discover fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container text-center">
+                    <p>Copyright © Website Name 2025</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- Modal for Video -->
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="videoModalLabel">Watch Our Video</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe id="videoIframe" class="embed-responsive-item"
+                                src="https://www.youtube.com/embed/e4Tk-kcOmUA"
+                                title="My Ultra Low-Maintenance Garden: The Full Tour" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-to-top" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+
     </main>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const options = {
+                root: null, // Use the viewport as the container
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the card is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible'); // Add class when visible
+                    } else {
+                        entry.target.classList.remove('visible'); // Remove class when not visible
+                    }
+                });
+            }, options);
+
+            const cards = document.querySelectorAll('.plant-card, .featured-card');
+            cards.forEach(card => {
+                observer.observe(card); // Observe each card
+            });
+
+            // Stop video playback when modal is closed
+            $('#videoModal').on('hidden.bs.modal', function () {
+                const iframe = document.getElementById('videoIframe');
+                const iframeSrc = iframe.src;
+                iframe.src = iframeSrc; // Reset the src to stop the video
+            });
+        });
+    </script>
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 200) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+    
 </body>
+
 </html>
