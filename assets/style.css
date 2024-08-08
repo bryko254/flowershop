@@ -47,6 +47,25 @@ body {
     margin-top: 1rem;
 }
 
+/* annimation for hero text */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+.animated-text {
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+
+
 .herobtn {
     border-radius: 20px;
     border-radius: 20px;
