@@ -335,11 +335,11 @@ body {
 }
 
 .play-btn:hover {
-    color: #198754; /* Hover color effect */
+    color: #198754; 
 }
 
 .blog {
-    background-color: #f9f9f9; /* Light grey background for the blog section */
+    background-color: #f9f9f9;
     padding: 50px 0;
 }
 
