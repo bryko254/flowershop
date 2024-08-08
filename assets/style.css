@@ -10,8 +10,9 @@ body {
 }
 
 .custom-navbar {
-    background-color: black;
+    background-color: #a086d2;
     border: none;
+    height: 8vh;
 }
 
 .navbar-nav .nav-link {
@@ -49,8 +50,8 @@ body {
 .herobtn {
     border-radius: 20px;
     border-radius: 20px;
-    background-color: #a086d2;
-    border: 1px solid #a086d2;
+    background: none;
+    border: 2px solid #a086d2;
     padding: 12px 24px;
     font-size: 1.1rem;
     color: #fff;
@@ -95,6 +96,9 @@ body {
     /* background-color: #871d82; */
     background-color: #a086d2;
     border: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .card img {
@@ -106,9 +110,50 @@ body {
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
 }
+.card-title{
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.card-text{
+    color: white;
+}
+.btn-primary {
+    /* background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;  */
 
+    border: 2px solid #198754;
+    color: white;
+    font-weight: bold;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    background-color: #004085; /* Even darker shade when clicked */
+    transform: translateY(0);
+}
+
+/* category section starts here */
 .categories {
     padding-top: 5%;
+    background-color: ghostwhite;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -126,10 +171,15 @@ body {
 }
 
 .semi-title {
-    text-align: center;
+    /* text-align: center;
     color: black;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; */
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin: 50px 0;
+    color: #333;
 }
 
 .plant-card,
@@ -165,7 +215,8 @@ body {
     position: absolute;
     bottom: 15px;
     left: 15px;
-    background-color: rgb(3, 96, 3);
+    /* background-color: rgb(3, 96, 3); */
+    background-color: #a086d2;
     color: white;
     padding: 10px 15px;
     border-radius: 8px;
@@ -192,6 +243,11 @@ body {
     font-size: 0.9rem;
     color: #f1f1f1;
     margin-bottom: 1rem;
+}
+
+.View_link{
+    color: #FFFF00;
+    font-weight: bold;
 }
 
 .order-btn {
@@ -270,7 +326,8 @@ body {
 
 .blog h2 {
     font-size: 2rem;
-    color: #333;
+    color: darkcyan;
+    text-decoration: underline;
 }
 
 .blog-card {
@@ -481,6 +538,8 @@ body {
     background-color: #333;
     padding: 20px 0;
     color: #b0b0b0;
+    width: 34%;
+    height: 10vh;
 }
 
 .footer-bottom p {
