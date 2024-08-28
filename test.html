@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Supabase Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+
+    <script>
+        const supabaseUrl = 'https://rdqaxqagqyylxvdksnzi.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkcWF4cWFncXl5bHh2ZGtzbnppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzkyNjk5NywiZXhwIjoyMDM5NTAyOTk3fQ.BCgpL_7mNghbz_Y7uQgVRhjjIAh5zCuwHKltD3VtZIU'; // Replace this with your actual Supabase key
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Now you can use Supabase in your script
+        // Example: Fetching data from a table
+        async function fetchData() {
+            const { data, error } = await supabaseClient
+                .from('categories')
+                .select('*');
+            console.log(data, error);
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
