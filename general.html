@@ -164,37 +164,6 @@
         <!-- Flash messages will be dynamically added here -->
     </div>
 
-    <!-- Add Entry Modal -->
-    <div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEntryModalLabel">Add New Entry</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addEntryForm">
-                        <div class="form-group">
-                            <label for="banner_txt">Banner Text</label>
-                            <input type="text" class="form-control" id="banner_txt" placeholder="Enter banner text" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="about_txt">About Text</label>
-                            <textarea class="form-control" id="about_txt" rows="3" placeholder="Enter about text" required></textarea>
-                        </div>
-                        <!-- Add other form fields as per your table structure -->
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addEntry()">Save Entry</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container-fluid">
         <div class="row" id="entryList">
             <!-- Entry cards will be dynamically added here -->
@@ -253,24 +222,7 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkcWF4cWFncXl5bHh2ZGtzbnppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzkyNjk5NywiZXhwIjoyMDM5NTAyOTk3fQ.BCgpL_7mNghbz_Y7uQgVRhjjIAh5zCuwHKltD3VtZIU'; // Replace with your actual Supabase key
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Check if the user is authenticated
-        async function checkAuth() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-
-            if (!session) {
-                // No session means the user is not authenticated
-                window.location.href = 'login.html'; // Redirect to the login page
-            } else {
-                console.log('User is authenticated:', session.user);
-                // Proceed with your application logic here
-                fetchEntries(currentPage); // Start fetching entries if authenticated
-            }
-        }
-
-        // Call the checkAuth function when the page loads
-        document.addEventListener('DOMContentLoaded', checkAuth);
-        
-        const entriesPerPage = 12;
+        let entriesPerPage = 12;
         let currentPage = 1;
         let totalEntries = 0;
 
@@ -280,9 +232,10 @@
 
             try {
                 // Fetch entries from Supabase
-                const { data, error } = await supabaseClient
-                    .from('general') // Replace with your actual table name
+                const { data, error, count } = await supabaseClient
+                    .from('general')
                     .select('*', { count: 'exact' })
+                    .ilike('banner_txt', `%${searchTerm}%`)
                     .range((page - 1) * entriesPerPage, page * entriesPerPage - 1)
                     .order(sortBy.split('.')[0], { ascending: sortBy.split('.')[1] === 'asc' });
 
@@ -292,8 +245,7 @@
                     return;
                 }
 
-                totalEntries = data.length;
-
+                totalEntries = count;
                 const entryList = document.getElementById('entryList');
                 entryList.innerHTML = ''; // Clear any existing entries
 
@@ -352,17 +304,28 @@
             fetchEntries(1, searchTerm);
         });
 
-        // Function to add a new entry
+        // Function to add a new entry, ensuring only one entry for specific fields
         async function addEntry() {
             const bannerTxt = document.getElementById('banner_txt').value;
             const aboutTxt = document.getElementById('about_txt').value;
             // Add more fields as needed
 
+            // Ensure there's only one entry for specific fields
+            const { data: existingEntries } = await supabaseClient
+                .from('general')
+                .select('id')
+                .not('banner_txt', 'is', null);
+
+            if (existingEntries.length > 0 && bannerTxt) {
+                showFlashMessage('Banner text entry already exists. Please update the existing entry.', 'error');
+                return;
+            }
+
             try {
                 const { data, error } = await supabaseClient
-                    .from('general') // Replace with your actual table name
+                    .from('general')
                     .insert([
-                        { banner_txt: bannerTxt, about_txt: aboutTxt /* Add more fields here */ }
+                        { banner_txt: bannerTxt, about_txt: aboutTxt }
                     ]);
 
                 if (error) {
@@ -383,7 +346,7 @@
         // Function to show the edit entry modal and populate fields
         async function showEditEntryModal(entryId) {
             const { data: entry, error } = await supabaseClient
-            .from('general') // Replace with your actual table name
+                .from('general')
                 .select('*')
                 .eq('id', entryId)
                 .single();
@@ -412,7 +375,7 @@
 
             try {
                 const { data, error } = await supabaseClient
-                    .from('general') // Replace with your actual table name
+                    .from('general')
                     .update({
                         banner_txt: bannerTxt,
                         about_txt: aboutTxt,
@@ -446,7 +409,7 @@
         async function deleteEntry(entryId) {
             try {
                 const { error } = await supabaseClient
-                    .from('general') // Replace with your actual table name
+                    .from('general')
                     .delete()
                     .eq('id', entryId);
 
@@ -555,4 +518,3 @@
 </body>
 
 </html>
-
