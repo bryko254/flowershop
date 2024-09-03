@@ -81,6 +81,11 @@
         .category-body {
             min-height: 82vh;
         }
+        
+        .category-img {
+            width: 100px;
+            height: auto;
+        }
     </style>
 </head>
 
@@ -133,6 +138,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Category Image</th>
                     <th>Category Name</th>
                     <th>Description</th>
                     <th>Actions</th>
@@ -154,7 +160,6 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    
                 </div>
                 <div class="modal-body">
                     <form id="addCategoryForm">
@@ -165,6 +170,10 @@
                         <div class="form-group">
                             <label for="categoryDescription">Description</label>
                             <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryImg">Category Image</label>
+                            <input type="file" class="form-control" id="categoryImg" accept="image/*">
                         </div>
                     </form>
                 </div>
@@ -178,35 +187,41 @@
 
     <!-- Edit Category Modal -->
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editCategoryForm">
-                        <input type="hidden" id="editCategoryId">
-                        <div class="form-group">
-                            <label for="editCategoryName">Category Name</label>
-                            <input type="text" class="form-control" id="editCategoryName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editCategoryDescription">Description</label>
-                            <textarea class="form-control" id="editCategoryDescription" rows="3" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-save" onclick="saveCategory()">Save Changes</button>
-                </div>
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryForm">
+                    <input type="hidden" id="editCategoryId">
+                    <div class="form-group">
+                        <label for="editCategoryName">Category Name</label>
+                        <input type="text" class="form-control" id="editCategoryName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoryDescription">Description</label>
+                        <textarea class="form-control" id="editCategoryDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoryImg">Current Category Image</label>
+                        <img id="editCategoryImgPreview" src="" alt="Current Category Image" class="category-img mb-3" style="display: block;"/>
+                        <input type="file" class="form-control" id="editCategoryImg" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-save" onclick="saveCategory()">Save Changes</button>
             </div>
         </div>
     </div>
+    </div>
+
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
@@ -311,7 +326,7 @@
         // Call the checkAuth function when the page loads
         checkAuth();
 
-        
+        // Fetch and display categories
         async function fetchCategories() {
             const { data, error } = await supabaseClient
                 .from('categories')
@@ -338,6 +353,24 @@
                 idCell.textContent = category.id;
                 row.appendChild(idCell);
 
+                const imgCell = document.createElement('td'); // New cell for image
+                const imgElement = document.createElement('img');
+                
+                if (category.category_img) {
+                    const { data: publicURL } = supabaseClient
+                        .storage
+                        .from('images_flowers')
+                        .getPublicUrl(category.category_img);
+
+                    imgElement.src = publicURL.publicUrl; // Correctly set the image URL
+                } else {
+                    imgElement.src = './assets/images/default-category.png'; // Use a default image if none is provided
+                }
+
+                imgElement.classList.add('category-img');
+                imgCell.appendChild(imgElement);
+                row.appendChild(imgCell);
+
                 const nameCell = document.createElement('td');
                 nameCell.textContent = category.category_name;
                 row.appendChild(nameCell);
@@ -349,7 +382,7 @@
                 const actionsCell = document.createElement('td');
                 actionsCell.innerHTML = `
                     <button class="btn btn-view btn-sm" onclick="viewCategory(${category.id})">View</button>
-                    <button class="btn btn-edit btn-sm" onclick="showEditCategoryModal(${category.id}, '${category.category_name}', '${category.description || ''}')">Edit</button>
+                    <button class="btn btn-edit btn-sm" onclick="showEditCategoryModal(${category.id}, '${category.category_name}', '${category.description || ''}', '${category.category_img || ''}')">Edit</button>
                     <button class="btn btn-delete btn-sm" onclick="showDeleteCategoryModal(${category.id})">Delete</button>
                 `;
                 row.appendChild(actionsCell);
@@ -358,18 +391,39 @@
             });
         }
 
+
+
         // Fetch categories when the page loads
         fetchCategories();
-
 
         // Function to add a new category
         async function addCategory() {
             const categoryName = document.getElementById('categoryName').value;
             const categoryDescription = document.getElementById('categoryDescription').value;
+            const categoryImg = document.getElementById('categoryImg').files[0];
+
+            let imageUrl = null;
+
+            if (categoryImg) {
+                console.log('Uploading image:', categoryImg.name);
+                const { data: uploadData, error: uploadError } = await supabaseClient
+                    .storage
+                    .from('images_flowers')
+                    .upload(`categories/${Date.now()}_${categoryImg.name}`, categoryImg);
+
+                if (uploadError) {
+                    console.error('Error uploading image:', uploadError);
+                    showFlashMessage('Failed to upload image. Please try again.', 'error');
+                    return;
+                }
+
+                imageUrl = uploadData.path; // Store the path of the uploaded image
+                console.log('Image uploaded successfully:', imageUrl);
+            }
 
             const { data, error } = await supabaseClient
                 .from('categories')
-                .insert([{ category_name: categoryName, description: categoryDescription }]);
+                .insert([{ category_name: categoryName, description: categoryDescription, category_img: imageUrl }]);
 
             if (error) {
                 console.error('Error adding category:', error);
@@ -382,22 +436,69 @@
         }
 
         // Function to show the edit category modal and populate the fields
-        function showEditCategoryModal(id, name, description) {
+        function showEditCategoryModal(id, name, description, img) {
             document.getElementById('editCategoryId').value = id;
             document.getElementById('editCategoryName').value = name;
             document.getElementById('editCategoryDescription').value = description;
+            
+            const imgPreviewElement = document.getElementById('editCategoryImgPreview');
+            
+            if (img) {
+                const { data: publicURL, error } = supabaseClient
+                    .storage
+                    .from('images_flowers')
+                    .getPublicUrl(img);
+
+                if (error) {
+                    console.error('Error fetching public URL:', error);
+                } else {
+                    imgPreviewElement.src = publicURL.publicUrl; // Set the current image URL
+                    imgPreviewElement.style.display = 'block';
+                }
+            } else {
+                imgPreviewElement.style.display = 'none'; // Hide the image preview if there's no image
+            }
+
+            document.getElementById('editCategoryImg').value = ''; // Clear the file input
             $('#editCategoryModal').modal('show');
         }
+
+
 
         // Function to save the edited category
         async function saveCategory() {
             const categoryId = document.getElementById('editCategoryId').value;
             const categoryName = document.getElementById('editCategoryName').value;
             const categoryDescription = document.getElementById('editCategoryDescription').value;
+            const categoryImg = document.getElementById('editCategoryImg').files[0];
+
+            let imageUrl = null;
+
+            if (categoryImg) {
+                console.log('Uploading new image:', categoryImg.name);
+                const { data: uploadData, error: uploadError } = await supabaseClient
+                    .storage
+                    .from('images_flowers')
+                    .upload(`categories/${Date.now()}_${categoryImg.name}`, categoryImg);
+
+                if (uploadError) {
+                    console.error('Error uploading image:', uploadError);
+                    showFlashMessage('Failed to upload image. Please try again.', 'error');
+                    return;
+                }
+
+                imageUrl = uploadData.path; // Store the path of the uploaded image
+                console.log('Image uploaded successfully:', imageUrl);
+            }
+
+            const updateData = { category_name: categoryName, description: categoryDescription };
+            if (imageUrl) {
+                updateData.category_img = imageUrl;
+            }
 
             const { data, error } = await supabaseClient
                 .from('categories')
-                .update({ category_name: categoryName, description: categoryDescription })
+                .update(updateData)
                 .eq('id', categoryId);
 
             if (error) {
