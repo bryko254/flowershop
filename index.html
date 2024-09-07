@@ -8,6 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
     <style>
         /* Added CSS for video section to occupy half the viewport height */
@@ -237,7 +238,7 @@
                             <img src="./assets/images/flower-on-stand-1.jpg"
                                 alt="Cafe Plants" class="plant-image">
                             <div class="plant-info">
-                                <h3 class="mb-1">Bookays</h3>
+                                <h3 class="mb-1" id="cat1"></h3>
                                 <a href="#" class="View_link" >View more</a>
                             </div>
                         </div>
@@ -248,7 +249,7 @@
                             <img src="./assets/images/Mini Baking-28-background.jpg"
                                 alt="Cafe Plants" class="plant-image">
                             <div class="plant-info">
-                                <h3 class="mb-1">Mothers Day</h3>
+                                <h3 class="mb-1" id="cat2"></h3>
                                 <a href="#" class="View_link">View more</a>
                             </div>
                         </div>
@@ -259,7 +260,7 @@
                             <img src="./assets/images/IMG-birthday-cake.jpg"
                                 alt="Cafe Plants" class="plant-image">
                             <div class="plant-info">
-                                <h3 class="mb-1">Birthdays</h3>
+                                <h3 class="mb-1" id="cat3"></h3>
                                 <a href="#" class="View_link">View more</a>
                             </div>
                         </div>
@@ -272,7 +273,7 @@
                             <img src="./assets/images/IMG-bridal-team.jpg"
                                 alt="Cafe Plants" class="plant-image">
                             <div class="plant-info">
-                                <h3 class="mb-1">Wedding</h3>
+                                <h3 class="mb-1" id="cat4"></h3>
                                 <a href="#" class="View_link">View more</a>
 
                             </div>
@@ -622,6 +623,58 @@
                 backToTop.style.display = 'none';
             }
         });
+    </script>
+
+    <script>
+        const supabaseUrl = 'https://rdqaxqagqyylxvdksnzi.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkcWF4cWFncXl5bHh2ZGtzbnppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzkyNjk5NywiZXhwIjoyMDM5NTAyOTk3fQ.BCgpL_7mNghbz_Y7uQgVRhjjIAh5zCuwHKltD3VtZIU'; // Replace this with your actual Supabase key
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function fetchCategories() {
+            const { data, error } = await supabaseClient
+                .from('categories')
+                .select('*');
+
+            if (error) {
+                console.error('Error fetching categories:', error);
+                showFlashMessage('Failed to fetch categories. Please try again.', 'error');
+                return;
+            }
+
+            if (data.length === 0) {
+                showFlashMessage('No categories found.', 'info');
+                return;
+            }
+
+            // Assuming the first category should replace the Bookays text
+            const firstCategory = data[0];
+            document.getElementById('cat1').textContent = firstCategory.category_name;
+            const secondCategory = data[1];
+            document.getElementById('cat2').textContent = secondCategory.category_name;
+            const thirdCategory = data[2];
+            document.getElementById('cat3').textContent = thirdCategory.category_name;
+            const fourthCategory = data[3];
+            document.getElementById('cat4').textContent = fourthCategory.category_name;
+            // Replace the text and image in the first card dynamically
+            // const plantCard = document.querySelector('.plant-card');
+            // const plantImage = plantCard.querySelector('img');
+            // const plantInfoTitle = plantCard.querySelector('.plant-info h3');
+            // const plantLink = plantCard.querySelector('.View_link');
+
+            // Replace the image, category name, and link
+            // if (firstCategory.category_img) {
+            //     const { data: publicURL } = supabaseClient
+            //         .storage
+            //         .from('images_flowers')
+            //         .getPublicUrl(firstCategory.category_img);
+            //     plantImage.src = publicURL.publicUrl;
+            // }
+            // plantInfoTitle.textContent = firstCategory.category_name;
+            // plantLink.href = `/category/${firstCategory.id}`;  // Assuming you have a category detail page
+        }
+
+        fetchCategories();
+
     </script>
     
 </body>
