@@ -149,6 +149,58 @@
         .category-flowers-search{
             margin-top: 14px;
         }
+
+        /* Skeleton loader */
+    .skeleton {
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .skeleton::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -150px;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to right, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
+        animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+        0% {
+            left: -150px;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    .skeleton-img {
+        height: 200px;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #e0e0e0;
+    }
+
+    .skeleton-text {
+        height: 20px;
+        width: 80%;
+        margin-top: 1rem;
+        background-color: #e0e0e0;
+    }
+
+    .skeleton-price {
+        height: 20px;
+        width: 40%;
+        margin-top: 1rem;
+        background-color: #e0e0e0;
+    }
+
     </style>
 </head>
 
@@ -393,79 +445,71 @@
 
         // Function to fetch and display category and flowers with pagination, search, and sorting functionality
         async function fetchCategoryAndFlowers(page = 1, searchTerm = '') {
-            const categoryId = getCategoryIdFromURL();
-            const sortBy = document.getElementById('sortBy').value;
+    const flowerList = document.getElementById('flowerList');
 
-            // Fetch category details
-            const { data: categoryData, error: categoryError } = await supabaseClient
-                .from('categories')
-                .select('*')
-                .eq('id', categoryId)
-                .single();
+    // Show skeleton loader before fetching the flowers
+    flowerList.innerHTML = `
+        <div class="col-md-4">
+            <div class="flower-card skeleton">
+                <div class="skeleton-img"></div>
+                <div class="flower-card-body">
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-price"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Add more skeleton cards if needed -->
+    `;
 
-            if (categoryError) {
-                console.error('Error fetching category:', categoryError);
-            } else {
-                document.getElementById('categoryName').textContent = categoryData.category_name;
-                document.getElementById('categoryDescription').textContent = categoryData.description;
-            }
+    // Fetch flowers as usual after showing the skeleton loader
+    const categoryId = getCategoryIdFromURL();
+    const sortBy = document.getElementById('sortBy').value;
 
-            // Fetch total number of flowers in this category for pagination
-            const { count: totalCount, error: countError } = await supabaseClient
-                .from('flowers')
-                .select('*', { count: 'exact', head: true })
-                .eq('category_id', categoryId);
+    // Fetch category and flower data here
+    let query = supabaseClient
+        .from('flowers')
+        .select('*')
+        .eq('category_id', categoryId)
+        .range((page - 1) * flowersPerPage, page * flowersPerPage - 1)
+        .order(sortBy.split('.')[0], { ascending: sortBy.split('.')[1] === 'asc' });
 
-            if (countError) {
-                console.error('Error fetching flower count:', countError);
-            } else {
-                totalFlowers = totalCount;
-            }
+    if (searchTerm) {
+        query = query.ilike('name', `%${searchTerm}%`);
+    }
 
-            // Fetch flowers in this category with pagination, search, and sorting filter
-            let query = supabaseClient
-                .from('flowers')
-                .select('*')
-                .eq('category_id', categoryId)
-                .range((page - 1) * flowersPerPage, page * flowersPerPage - 1)
-                .order(sortBy.split('.')[0], { ascending: sortBy.split('.')[1] === 'asc' });
+    const { data: flowers, error: flowersError } = await query;
 
-            if (searchTerm) {
-                query = query.ilike('name', `%${searchTerm}%`); // Case-insensitive search
-            }
+    // Replace skeleton loader with real data once loaded
+    if (flowersError) {
+        console.error('Error fetching flowers:', flowersError);
+    } else {
+        flowerList.innerHTML = ''; // Clear the skeleton loader
 
-            const { data: flowers, error: flowersError } = await query;
-
-            if (flowersError) {
-                console.error('Error fetching flowers:', flowersError);
-            } else {
-                const flowerList = document.getElementById('flowerList');
-                flowerList.innerHTML = ''; // Clear any existing flowers
-
-                flowers.forEach(flower => {
-                    const flowerCard = `
-                        <div class="col-md-4">
-                            <div class="flower-card">
-                                <img src="${flower.image_url}" alt="${flower.name}" loading="lazy">
-                                <div class="flower-card-body">
-                                    <h5 class="flower-card-title">${flower.name}</h5>
-                                    <p class="flower-card-text">${flower.description}</p>
-                                    <p class="flower-card-text price">KSH ${flower.price}</p>
-                                    <div class="d-flex justify-content-center">
-                                        <button class="btn btn-edit" onclick="showEditFlowerModal(${flower.id})">Edit</button>
-                                        <button class="btn btn-delete" onclick="confirmDeleteFlower(${flower.id})">Delete</button>
-                                    </div>
-                                </div>
+        flowers.forEach(flower => {
+            const flowerCard = `
+                <div class="col-md-4">
+                    <div class="flower-card">
+                        <img src="${flower.image_url}" alt="${flower.name}" loading="lazy">
+                        <div class="flower-card-body">
+                            <h5 class="flower-card-title">${flower.name}</h5>
+                            <p class="flower-card-text">${flower.description}</p>
+                            <p class="flower-card-text price">KSH ${flower.price}</p>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-edit" onclick="showEditFlowerModal(${flower.id})">Edit</button>
+                                <button class="btn btn-delete" onclick="confirmDeleteFlower(${flower.id})">Delete</button>
                             </div>
                         </div>
-                    `;
-                    flowerList.insertAdjacentHTML('beforeend', flowerCard);
-                });
+                    </div>
+                </div>
+            `;
+            flowerList.insertAdjacentHTML('beforeend', flowerCard);
+        });
 
-                // Update pagination controls
-                updatePaginationControls(page, searchTerm);
-            }
-        }
+        // Update pagination controls
+        updatePaginationControls(page, searchTerm);
+    }
+}
+
 
         // Function to update pagination controls
         function updatePaginationControls(page, searchTerm = '') {
