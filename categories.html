@@ -82,14 +82,52 @@
         .category-body {
             min-height: 82vh;
         }
+
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        table img {
+            max-width: 100px;  /* Set the max width */
+            max-height: 100px; /* Set the max height */
+            object-fit: cover; /* Ensures the image covers the box without distortion */
+            display: block;    /* Removes inline spacing */
+            margin: 0 auto;    /* Centers the image horizontally */
+        }
+
     </style>
 </head>
 
 <body>
     <!-- Preloader -->
-<div id="preloader">
-    <div class="spinner"></div>
-</div>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
             <a class="navbar-brand" href="#Home">
@@ -322,6 +360,9 @@
         checkAuth();
 
         async function fetchCategories() {
+            // Show preloader
+            document.getElementById('preloader').style.display = 'flex';
+
             const { data, error } = await supabaseClient
                 .from('categories')
                 .select('*');
@@ -329,6 +370,8 @@
             if (error) {
                 console.error('Error fetching categories:', error);
                 showFlashMessage('Failed to fetch categories. Please try again.', 'error');
+                // Hide preloader in case of error
+                document.getElementById('preloader').style.display = 'none';
                 return;
             }
 
@@ -361,7 +404,7 @@
                     } else if (publicUrl) {
                         console.log(`Public URL fetched for category ${category.category_name}: ${publicUrl}`);
                         // Use the full public URL for the image
-                        imageCell.innerHTML = `<img src="${publicUrl}" alt="Category Image" style="width: 50px; height: 50px;">`;
+                        imageCell.innerHTML = `<img src="${publicUrl}" alt="Category Image">`;
                     } else {
                         console.error(`Failed to retrieve a public URL for ${category.category_name}.`);
                         imageCell.textContent = 'Image not available';
@@ -389,6 +432,12 @@
 
                 tableBody.appendChild(row);
             });
+
+            // Hide preloader after fetching categories
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+            }, 500); // Match the transition duration in CSS
         }
 
         // Fetch categories when the page loads
