@@ -138,6 +138,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Category Name</th>
                     <th>Description</th>
                     <th>Actions</th>
@@ -150,36 +151,40 @@
     </div>
 
     <!-- Add Category Modal -->
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    
-                </div>
-                <div class="modal-body">
-                    <form id="addCategoryForm">
-                        <div class="form-group">
-                            <label for="categoryName">Category Name</label>
-                            <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="categoryDescription">Description</label>
-                            <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-save" onclick="addCategory()">Save Category</button>
-                </div>
+    <!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm">
+                    <div class="form-group">
+                        <label for="categoryName">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDescription">Description</label>
+                        <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryImage">Category Image</label>
+                        <input type="file" class="form-control-file" id="categoryImage" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-save" onclick="addCategory()">Save Category</button>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Edit Category Modal -->
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
@@ -316,7 +321,6 @@
         // Call the checkAuth function when the page loads
         checkAuth();
 
-        
         async function fetchCategories() {
             const { data, error } = await supabaseClient
                 .from('categories')
@@ -328,20 +332,44 @@
                 return;
             }
 
-            if (data.length === 0) {
-                showFlashMessage('No categories found.', 'info');
-                return;
-            }
-
             const tableBody = document.getElementById('categoryTableBody');
             tableBody.innerHTML = ''; // Clear any existing rows
 
-            data.forEach(category => {
+            // Process each category
+            data.forEach(async (category) => {
                 const row = document.createElement('tr');
 
                 const idCell = document.createElement('td');
                 idCell.textContent = category.id;
                 row.appendChild(idCell);
+
+                const imageCell = document.createElement('td');
+
+                if (category.category_img) {
+                    // Log the category image file path
+                    console.log(`Attempting to fetch image for category: ${category.category_name}, Path: ${category.category_img}`);
+
+                    // Get the public URL of the image
+                    const { data: { publicUrl }, error: urlError } = supabaseClient
+                        .storage
+                        .from('images_flowers')  // Ensure this is the correct bucket name
+                        .getPublicUrl(category.category_img);
+
+                    if (urlError) {
+                        console.error(`Error fetching image for category ${category.category_name}:`, urlError);
+                        imageCell.textContent = 'Image not available';
+                    } else if (publicUrl) {
+                        console.log(`Public URL fetched for category ${category.category_name}: ${publicUrl}`);
+                        // Use the full public URL for the image
+                        imageCell.innerHTML = `<img src="${publicUrl}" alt="Category Image" style="width: 50px; height: 50px;">`;
+                    } else {
+                        console.error(`Failed to retrieve a public URL for ${category.category_name}.`);
+                        imageCell.textContent = 'Image not available';
+                    }
+                } else {
+                    imageCell.textContent = 'No image';
+                }
+                row.appendChild(imageCell);
 
                 const nameCell = document.createElement('td');
                 nameCell.textContent = category.category_name;
@@ -366,15 +394,49 @@
         // Fetch categories when the page loads
         fetchCategories();
 
-
         // Function to add a new category
         async function addCategory() {
             const categoryName = document.getElementById('categoryName').value;
             const categoryDescription = document.getElementById('categoryDescription').value;
+            const categoryImage = document.getElementById('categoryImage').files[0];  // Get the image file
 
+            if (!categoryImage) {
+                showFlashMessage('Please select an image for the category.', 'error');
+                return;
+            }
+
+            // Upload the image to Supabase storage
+            const { data: imageUploadData, error: imageUploadError } = await supabaseClient
+                .storage
+                .from('images_flowers')  // Replace with your actual bucket name
+                .upload(`categories/${categoryImage.name}`, categoryImage);
+
+            if (imageUploadError) {
+                console.error('Error uploading image:', imageUploadError);
+                showFlashMessage('Failed to upload category image. Please try again.', 'error');
+                return;
+            }
+
+            // Get the public URL for the uploaded image
+            const { publicURL: categoryImageUrl, error: publicUrlError } = supabaseClient
+                .storage
+                .from('images_flowers')  // Replace with your actual bucket name
+                .getPublicUrl(`categories/${categoryImage.name}`);
+
+            if (publicUrlError) {
+                console.error('Error getting public URL for image:', publicUrlError);
+                showFlashMessage('Failed to retrieve image URL. Please try again.', 'error');
+                return;
+            }
+
+            // Insert the new category with the image URL
             const { data, error } = await supabaseClient
                 .from('categories')
-                .insert([{ category_name: categoryName, description: categoryDescription }]);
+                .insert([{ 
+                    category_name: categoryName, 
+                    description: categoryDescription, 
+                    category_img: categoryImageUrl // Add the image URL to the category
+                }]);
 
             if (error) {
                 console.error('Error adding category:', error);
