@@ -235,8 +235,8 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src="./assets/images/flower-on-stand-1.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                            <img src=""
+                                alt="Cafe Plants" class="plant-image" id="cat1_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat1"></h3>
                                 <a href="#" class="View_link" >View more</a>
@@ -247,7 +247,8 @@
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
                             <img src="./assets/images/Mini Baking-28-background.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                                alt="Cafe Plants" class="plant-image" id="cat2_img">
+
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat2"></h3>
                                 <a href="#" class="View_link">View more</a>
@@ -258,7 +259,7 @@
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
                             <img src="./assets/images/IMG-birthday-cake.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                                alt="Cafe Plants" class="plant-image" id="cat3_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat3"></h3>
                                 <a href="#" class="View_link">View more</a>
@@ -271,7 +272,7 @@
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
                             <img src="./assets/images/IMG-bridal-team.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                                alt="Cafe Plants" class="plant-image" id="cat4_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat4"></h3>
                                 <a href="#" class="View_link">View more</a>
@@ -283,9 +284,9 @@
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
                             <img src="./assets/images/IMG-outdoor-1.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                                alt="Cafe Plants" class="plant-image" id="cat5_img">
                             <div class="plant-info">
-                                <h3 class="mb-1">Graduation</h3>
+                                <h3 class="mb-1" id="cat5"></h3>
                                 <a href="#" class="View_link">View more</a>
                             </div>
                         </div>
@@ -293,20 +294,20 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/category/category-2.png"
-                                alt="Cafe Plants" class="plant-image">
+                            <img src=""
+                                alt="Cafe Plants" class="plant-image" id="cat6_img">
                             <div class="plant-info">
-                                <h3 class="mb-1">Anniversary</h3>
+                                <h3 class="mb-1" id="cat6"></h3>
                                 <a href="#" class="View_link">View more</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src="assets/images/Bookay-BG-2-Valentine1.jpg"
-                                alt="Cafe Plants" class="plant-image">
+                            <img src=""
+                                alt="Cafe Plants" class="plant-image" id="cat7_img">
                             <div class="plant-info">
-                                <h3 class="mb-1">Valentine</h3>
+                                <h3 class="mb-1" id="cat7"></h3>
                                 <a href="#" class="View_link">View more</a>
                             </div>
                         </div>
@@ -646,31 +647,35 @@
                 return;
             }
 
-            // Assuming the first category should replace the Bookays text
+            console.log(data);
+            // Assuming the first category should replace the Bookays text and the img
             const firstCategory = data[0];
             document.getElementById('cat1').textContent = firstCategory.category_name;
+            document.getElementById('cat1_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(firstCategory.category_img).data.publicUrl;
+            
             const secondCategory = data[1];
             document.getElementById('cat2').textContent = secondCategory.category_name;
+            document.getElementById('cat2_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(secondCategory.category_img).data.publicUrl;
+            
             const thirdCategory = data[2];
             document.getElementById('cat3').textContent = thirdCategory.category_name;
+            document.getElementById('cat3_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(thirdCategory.category_img).data.publicUrl;
+            
             const fourthCategory = data[3];
             document.getElementById('cat4').textContent = fourthCategory.category_name;
-            // Replace the text and image in the first card dynamically
-            // const plantCard = document.querySelector('.plant-card');
-            // const plantImage = plantCard.querySelector('img');
-            // const plantInfoTitle = plantCard.querySelector('.plant-info h3');
-            // const plantLink = plantCard.querySelector('.View_link');
-
-            // Replace the image, category name, and link
-            // if (firstCategory.category_img) {
-            //     const { data: publicURL } = supabaseClient
-            //         .storage
-            //         .from('images_flowers')
-            //         .getPublicUrl(firstCategory.category_img);
-            //     plantImage.src = publicURL.publicUrl;
-            // }
-            // plantInfoTitle.textContent = firstCategory.category_name;
-            // plantLink.href = `/category/${firstCategory.id}`;  // Assuming you have a category detail page
+            document.getElementById('cat4_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fourthCategory.category_img).data.publicUrl;
+            
+            const fifthCategory = data[4];
+            document.getElementById('cat5').textContent = fifthCategory.category_name;
+            document.getElementById('cat5_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fifthCategory.category_img).data.publicUrl;
+            
+            const sixthCategory = data[5];
+            document.getElementById('cat6').textContent = sixthCategory.category_name;
+            document.getElementById('cat6_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(sixthCategory.category_img).data.publicUrl;
+            
+            const seventhCategory = data[6];
+            document.getElementById('cat7').textContent = seventhCategory.category_name;
+            document.getElementById('cat7_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(seventhCategory.category_img).data.publicUrl;
         }
 
         fetchCategories();

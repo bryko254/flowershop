@@ -1,0 +1,136 @@
+[33mcommit 2ff2d106a1c16e64f7f50973abd78d08ae57b934[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Sep 15 12:13:01 2024 +0300
+
+    category images styling
+
+[33mcommit b017c6bff9f410bd3ac89ccaa5ea6b924171a917[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Sep 15 12:00:40 2024 +0300
+
+    category images
+
+[33mcommit c544bba0910c4b352dfd94bcebd83423c63603c0[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sat Sep 14 13:55:02 2024 +0300
+
+    preloader on skeleton screen
+
+[33mcommit 32ac8b95abdaed470c11ffb4d370fcb2376e84c3[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sat Sep 14 13:46:15 2024 +0300
+
+    preloader; reset password
+
+[33mcommit b13f067f44f083a97bce16f8900e388ead38bb36[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sat Sep 14 12:02:29 2024 +0300
+
+    feat: Add preloaders and improve password reset workflow
+    
+    - Added preloaders to all pages for better UX.
+    - Simplified forgot password flow by adding a modal instead of a separate page.
+    - Fixed password reset functionality with Supabase integration.
+    - Enhanced user authentication checks and logout logic.
+    - Improved category management with CRUD operations for flower categories.
+    - Added admin management functionalities, including user creation, deletion, and password resets.
+
+[33mcommit 8e0cc179c670b53e08b99b47e0c8cf296e0f8c47[m
+Merge: 3a39581 387470a
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Sep 8 02:36:12 2024 +0300
+
+    test
+
+[33mcommit 3a3958146808f4f2a66236a8afba68c7ad330428[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Sep 8 02:27:37 2024 +0300
+
+    Categories are now fetched from the server in the index page
+
+[33mcommit 387470a36cc9b8ba2e8bb0acdd0e1e493e602916[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Tue Sep 3 14:56:52 2024 +0300
+
+    category images
+
+[33mcommit 60c27898c6b1c75ebbbc9f4a0ddc9d6b4d7e262f[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Mon Sep 2 09:02:47 2024 +0300
+
+    blog cms
+
+[33mcommit 348113b706d95fa426faba0d6e8b316cc4aacd7a[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Sep 1 18:59:33 2024 +0300
+
+    general table
+
+[33mcommit 8b29893f3c09e1f3314002c15a0cd6ec0e66e40d[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Thu Aug 29 00:00:02 2024 +0300
+
+    insert in supabase ready
+
+[33mcommit 9a40be99649233f33ec288b4ef5543bafb8c816e[m
+Merge: 306fca4 16603e4
+Author: bryko254 <117910781+bryko254@users.noreply.github.com>
+Date:   Sat Aug 17 23:15:55 2024 +0300
+
+    Merge pull request #1 from bryko254/branch-steve-branch
+    
+    Branch steve branch
+
+[33mcommit 16603e4be093d5e7ba711a0e830c5706707993ce[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 21:06:00 2024 +0300
+
+    updated footer
+
+[33mcommit 03ab612df78fef0665279620dbef6f2aca40a663[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 15:30:28 2024 +0300
+
+    added animation to the hero text
+
+[33mcommit 502d1708a65dc6e14a60b80554d4664a22f57b45[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 15:19:56 2024 +0300
+
+    adjusted the logo position and size
+
+[33mcommit ff1fb41def9e2fe26ef23cae42e2ab68380bec66[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 15:15:09 2024 +0300
+
+    added the logo
+
+[33mcommit ec9099a3952518b78a654e488ed1af01adca5011[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 12:06:08 2024 +0300
+
+    Canged the hero text margin
+
+[33mcommit 48f736cb2325f156814252f46710167c14c50a3d[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Thu Aug 8 11:06:19 2024 +0300
+
+    changes
+
+[33mcommit b73d27f5394cfb10169491e4c2ee3eacca836ac3[m
+Author: StephenNjambi <stevenjugushh@gmail.com>
+Date:   Wed Aug 7 12:13:48 2024 +0300
+
+    pushed changes
+
+[33mcommit 306fca454c3334d6eda70c248e753f962d47764e[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Sun Aug 4 01:52:22 2024 +0300
+
+    structure page one
+
+[33mcommit c1f709e3c16f0eebf8fc157b46a665cc37bb5839[m
+Author: brykoech <brykoech@gmail.com>
+Date:   Wed Jul 24 16:39:13 2024 +0300
+
+    initial commit
