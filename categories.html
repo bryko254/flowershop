@@ -394,6 +394,9 @@
         fetchCategories();
 
         async function addCategory() {
+            // Show preloader when adding a category
+            document.getElementById('preloader').style.display = 'block';
+
             const categoryName = document.getElementById('categoryName').value;
             const categoryDescription = document.getElementById('categoryDescription').value;
             const categoryImage = document.getElementById('categoryImage').files[0];
@@ -426,6 +429,9 @@
                 fetchCategories();
                 showFlashMessage('Category added successfully!');
             }
+
+            // Hide preloader after the operation is complete
+            document.getElementById('preloader').style.display = 'none';
         }
 
         function showEditCategoryModal(id, name, description, imageUrl) {
@@ -452,6 +458,9 @@
         }
 
         async function saveCategory() {
+            // Show preloader when saving changes
+            document.getElementById('preloader').style.display = 'block';
+
             const categoryId = document.getElementById('editCategoryId').value;
             const categoryName = document.getElementById('editCategoryName').value;
             const categoryDescription = document.getElementById('editCategoryDescription').value;
@@ -503,6 +512,9 @@
                 $('#editCategoryModal').modal('hide'); // Close the modal after saving changes
                 fetchCategories(); // Refresh the categories to reflect the changes
             }
+
+            // Hide preloader after the operation is complete
+            document.getElementById('preloader').style.display = 'none';
         }
 
         function showDeleteCategoryModal(categoryId) {

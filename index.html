@@ -239,7 +239,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat1_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat1"></h3>
-                                <a href="#" class="View_link" >View more</a>
+                                <a href="#" class="View_link" id="cat1_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
 
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat2"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat2_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -262,7 +262,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat3_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat3"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat3_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -275,7 +275,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat4_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat4"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat4_id">View more</a>
 
                             </div>
                         </div>
@@ -287,7 +287,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat5_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat5"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat5_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat6_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat6"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat6_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -308,7 +308,7 @@
                                 alt="Cafe Plants" class="plant-image" id="cat7_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat7"></h3>
-                                <a href="#" class="View_link">View more</a>
+                                <a href="#" class="View_link" id="cat7_id">View more</a>
                             </div>
                         </div>
                     </div>
@@ -652,30 +652,38 @@
             const firstCategory = data[0];
             document.getElementById('cat1').textContent = firstCategory.category_name;
             document.getElementById('cat1_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(firstCategory.category_img).data.publicUrl;
+            document.getElementById('cat1_id').href = `client_categories.html?id=${firstCategory.id}`;
             
+
             const secondCategory = data[1];
             document.getElementById('cat2').textContent = secondCategory.category_name;
             document.getElementById('cat2_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(secondCategory.category_img).data.publicUrl;
-            
+            document.getElementById('cat2_id').href = `client_categories.html?id=${secondCategory.id}`;
+
             const thirdCategory = data[2];
             document.getElementById('cat3').textContent = thirdCategory.category_name;
             document.getElementById('cat3_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(thirdCategory.category_img).data.publicUrl;
-            
+            document.getElementById('cat3_id').href = `client_categories.html?id=${thirdCategory.id}`;
+
             const fourthCategory = data[3];
             document.getElementById('cat4').textContent = fourthCategory.category_name;
             document.getElementById('cat4_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fourthCategory.category_img).data.publicUrl;
+            document.getElementById('cat4_id').href = `client_categories.html?id=${fourthCategory.id}`;
             
             const fifthCategory = data[4];
             document.getElementById('cat5').textContent = fifthCategory.category_name;
             document.getElementById('cat5_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fifthCategory.category_img).data.publicUrl;
-            
+            document.getElementById('cat5_id').href = `client_categories.html?id=${fifthCategory.id}`;
+
             const sixthCategory = data[5];
             document.getElementById('cat6').textContent = sixthCategory.category_name;
             document.getElementById('cat6_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(sixthCategory.category_img).data.publicUrl;
-            
+            document.getElementById('cat6_id').href = `client_categories.html?id=${sixthCategory.id}`;
+
             const seventhCategory = data[6];
             document.getElementById('cat7').textContent = seventhCategory.category_name;
             document.getElementById('cat7_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(seventhCategory.category_img).data.publicUrl;
+            document.getElementById('cat7_id').href = `client_categories.html?id=${seventhCategory.id}`;
         }
 
         fetchCategories();
