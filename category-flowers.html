@@ -678,48 +678,85 @@
         // Function to save the edited flower details
         async function saveFlower() {
             const flowerId = document.getElementById('editFlowerId').value;
-            const flowerName = document.getElementById('editFlowerName').value;
-            const flowerDescription = document.getElementById('editFlowerDescription').value;
+            const flowerName = document.getElementById('editFlowerName').value.trim();
+            const flowerDescription = document.getElementById('editFlowerDescription').value.trim();
             const flowerPrice = parseFloat(document.getElementById('editFlowerPrice').value);
-            const flowerImage = document.getElementById('editFlowerImage').files[0];
+            const flowerImageInput = document.getElementById('editFlowerImage');
+            const flowerImage = flowerImageInput.files[0];
+            console.log('Selected File:', flowerImage);
 
-            let imageUrl;
+            let imageUrl = '';
+
+            // Validate inputs
+            if (!flowerName || !flowerDescription || isNaN(flowerPrice) || flowerPrice <= 0) {
+                showFlashMessage('Please provide valid flower details.', 'error');
+                return;
+            }
 
             if (flowerImage) {
-                // Upload new image if provided
-                const fileExt = flowerImage.name.split('.').pop();
-                const fileName = `${flowerName}-${Date.now()}.${fileExt}`;
-                const filePath = `flowers/${fileName}`;
+                // File type and size validation
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                const maxSize = 2 * 1024 * 1024; // 2MB
 
-                const { data: fileData, error: fileError } = await supabaseClient
-                    .storage
-                    .from('images_flowers')
-                    .upload(filePath, flowerImage);
-
-                if (fileError) {
-                    console.error('Error uploading image:', fileError);
-                    showFlashMessage('Failed to upload image. Please try again.', 'error');
+                if (!allowedTypes.includes(flowerImage.type)) {
+                    showFlashMessage('Invalid image type. Please upload JPEG, PNG, or GIF files.', 'error');
                     return;
                 }
 
-                imageUrl = `${supabaseUrl}/storage/v1/object/public/images_flowers/${filePath}`;
+                if (flowerImage.size > maxSize) {
+                    showFlashMessage('Image size exceeds 2MB. Please upload a smaller image.', 'error');
+                    return;
+                }
+
+                // Generate unique filename
+                const fileExt = flowerImage.name.split('.').pop();
+                const fileName = `${Date.now()}_anniversary.${fileExt}`;
+                const filePath = `flowers/${fileName}`; // Ensure 'flowers' is the correct folder
+
+                try {
+                    const { data: fileData, error: fileError } = await supabaseClient
+                        .storage
+                        .from('images_flowers')
+                        .upload(filePath, flowerImage, { upsert: false }); // Set upsert based on your requirement
+
+                    if (fileError) {
+                        throw fileError;
+                    }
+
+                    imageUrl = `${supabaseUrl}/storage/v1/object/public/images_flowers/${filePath}`;
+                    console.log('File uploaded successfully:', fileData);
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    showFlashMessage(`Failed to upload image: ${error.message}`, 'error');
+                    return;
+                }
             } else {
-                // Keep the current image if no new image is provided
+                // If no new image is uploaded, retain existing image URL
                 imageUrl = document.getElementById('currentFlowerImage').src;
             }
 
-            const { data, error } = await supabaseClient
-                .from('flowers')
-                .update({ name: flowerName, description: flowerDescription, price: flowerPrice, image_url: imageUrl })
-                .eq('id', flowerId);
+            try {
+                const { data, error } = await supabaseClient
+                    .from('flowers')
+                    .update({
+                        name: flowerName,
+                        description: flowerDescription,
+                        price: flowerPrice,
+                        image_url: imageUrl
+                    })
+                    .eq('id', flowerId);
 
-            if (error) {
-                console.error('Error updating flower:', error);
-                showFlashMessage('Failed to update flower. Please try again.', 'error');
-            } else {
+                if (error) {
+                    throw error;
+                }
+
                 $('#editFlowerModal').modal('hide');
+                document.getElementById('editFlowerForm').reset();
                 fetchCategoryAndFlowers(currentPage); // Refresh the flower list
-                showFlashMessage('Flower updated successfully!');
+                showFlashMessage('Flower updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating flower:', error);
+                showFlashMessage(`Failed to update flower: ${error.message}`, 'error');
             }
         }
 
