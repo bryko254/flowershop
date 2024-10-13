@@ -10,7 +10,7 @@ body {
 }
 
 .custom-navbar {
-    background-color: #a086d2;
+    background-color: #a086d2 !important;
     border: none;
     height: 10vh;
 }

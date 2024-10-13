@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - BookayFlorists</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        .hero {
+            height: 50vh;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .blog-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+            <!-- add logo here
+             
+            <a class="navbar-brand" href="#">BookayFlorists</a> -->
+            <a class="navbar-brand" href="#Home">
+                <img src="./assets/images/Bookay_Logo_plain.png" alt="BookayFlorists Logo" style="height: 100px; width: auto; margin-left: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="client_about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="client_blogs.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="client_contact.html">Contact</a>
+                    </li>
+                </ul>
+                <button class="btn btn-warning ml-3">View Offers</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="blog-hero" class="hero d-flex align-items-center justify-content-center text-white">
+            <div class="hero-content text-center">
+                <h1 id="blog-title" class="display-4"></h1>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div id="loading" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <article id="blog-post-content">
+                <!-- Blog post content will be dynamically inserted here -->
+            </article>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> BookayFlorists. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        const supabaseUrl = 'https://rdqaxqagqyylxvdksnzi.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkcWF4cWFncXl5bHh2ZGtzbnppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzkyNjk5NywiZXhwIjoyMDM5NTAyOTk3fQ.BCgpL_7mNghbz_Y7uQgVRhjjIAh5zCuwHKltD3VtZIU';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function fetchBlogPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            if (!postId) {
+                showFlashMessage('Blog post ID is missing.', 'error');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const content = document.getElementById('blog-post-content');
+
+            try {
+                loading.style.display = 'block';
+                content.innerHTML = '';
+
+                const { data, error } = await supabaseClient
+                    .from('blog_content')
+                    .select('*')
+                    .eq('id', postId)
+                    .single();
+
+                if (error) throw error;
+
+                displayBlogPost(data);
+            } catch (error) {
+                console.error('Error fetching blog post:', error);
+                showFlashMessage('Failed to fetch blog post. Please try again.', 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayBlogPost(post) {
+            const heroSection = document.getElementById('blog-hero');
+            const title = document.getElementById('blog-title');
+            const content = document.getElementById('blog-post-content');
+
+            // Set hero image
+            heroSection.style.backgroundImage = `url('${getImageUrl(post.blog_img)}')`;
+
+            // Set title
+            title.textContent = post.title;
+
+            // Set content
+            content.innerHTML = `
+                <h2 class="mb-4">${post.title}</h2>
+                <div class="blog-meta mb-4">
+                    <i class="far fa-clock"></i>
+                    <span class="creation-time">${formatDate(post.created_at)}</span>
+                    <span class="ml-3"><i class="fas fa-tag"></i> ${post.blog_tag || 'Uncategorized'}</span>
+                </div>
+                <div class="blog-content">
+                    ${post.content}
+                </div>
+            `;
+        }
+
+        function getImageUrl(image) {
+            if (!image) return 'default-blog-image.jpg';
+            if (image.startsWith('http')) {
+                return image; // It's already a full URL
+            } else {
+                return supabaseClient.storage.from('images_flowers').getPublicUrl(image).data.publicUrl;
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        function showFlashMessage(message, type) {
+            const flashMessage = document.createElement('div');
+            flashMessage.className = `alert alert-${type} alert-dismissible fade show`;
+            flashMessage.setAttribute('role', 'alert');
+            flashMessage.innerHTML = `
+                ${message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            `;
+            document.body.insertBefore(flashMessage, document.body.firstChild);
+
+            setTimeout(() => {
+                flashMessage.remove();
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchBlogPost);
+    </script>
+</body>
+</html>

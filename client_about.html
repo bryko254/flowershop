@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - BookayFlorists</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+    <style>
+        .hero {
+            background-image: url('https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/video.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .curve {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .curve svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 40px;
+        }
+        .curve .shape-fill {
+            fill: #FFFFFF;
+        }
+        .about-section {
+            padding: 50px 0;
+        }
+        .icon-box {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .icon-box:hover {
+            transform: translateY(-5px);
+        }
+        .icon-box i {
+            font-size: 2.5rem;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        /* Elegant Rose Animation Styles */
+        .flower-container {
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            /* overflow: hidden; */
+        }
+        .stem {
+            width: 8px;
+            height: 0;
+            background-color: #2e8b57;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: grow-stem 3s ease-out forwards;
+        }
+        .leaf {
+            width: 50px;
+            height: 25px;
+            background-color: #32cd32;
+            border-radius: 50% 50% 50% 0;
+            position: absolute;
+            bottom: 50px;
+            left: calc(50% + 10px);
+            transform: rotate(-30deg) scale(0);
+            animation: grow-leaf 2s ease-out 2s forwards;
+        }
+        .leaf:nth-child(2) {
+            left: calc(50% - 50px);
+            bottom: 120px;
+            transform: rotate(210deg) scale(0);
+        }
+        .rose {
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            animation: bloom 3s ease-out 3s forwards;
+        }
+        .petal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50% 50% 0 50%;
+            background-color: #ff69b4;
+            transform-origin: bottom right;
+            opacity: 0;
+        }
+        .petal:nth-child(1) { transform: rotate(0deg); animation: unfold 1s ease-out 3s forwards; }
+        .petal:nth-child(2) { transform: rotate(45deg); animation: unfold 1s ease-out 3.2s forwards; }
+        .petal:nth-child(3) { transform: rotate(90deg); animation: unfold 1s ease-out 3.4s forwards; }
+        .petal:nth-child(4) { transform: rotate(135deg); animation: unfold 1s ease-out 3.6s forwards; }
+        .petal:nth-child(5) { transform: rotate(180deg); animation: unfold 1s ease-out 3.8s forwards; }
+        .petal:nth-child(6) { transform: rotate(225deg); animation: unfold 1s ease-out 4s forwards; }
+        .petal:nth-child(7) { transform: rotate(270deg); animation: unfold 1s ease-out 4.2s forwards; }
+        .petal:nth-child(8) { transform: rotate(315deg); animation: unfold 1s ease-out 4.4s forwards; }
+
+        @keyframes grow-stem {
+            to { height: 300px; }
+        }
+        @keyframes grow-leaf {
+            to { transform: rotate(var(--rotation, -30deg)) scale(1); }
+        }
+        @keyframes bloom {
+            to { transform: translateX(-50%) scale(1); }
+        }
+        @keyframes unfold {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
+            <a class="navbar-brand" href="#">BookayFlorists</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="client_about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="client_blogs.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+                <button class="btn btn-warning ml-3">View Offers</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero d-flex align-items-center justify-content-center text-white">
+            <div class="hero-content text-center">
+                <h1 class="display-4">About BookayFlorists</h1>
+                <p class="lead">Bringing beauty and joy to your life, one flower at a time</p>
+            </div>
+            <div class="curve">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="flower-container">
+                            <div class="stem"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="rose">
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                                <div class="petal"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="mb-4">Our Story</h2>
+                        <p>BookayFlorists was born out of a passion for nature's beauty and a desire to share that beauty with the world. Since our inception in 2010, we've been dedicated to providing the freshest, most stunning flowers to our customers.</p>
+                        <p>Our team of expert florists combines artistry with nature to create breathtaking arrangements for every occasion. Whether it's a joyous celebration or a moment of quiet reflection, we believe in the power of flowers to convey emotions and create lasting memories.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-light py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Why Choose Us</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="icon-box">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Fresh Quality</h4>
+                            <p>We source our flowers directly from trusted growers to ensure the highest quality and freshness.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box">
+                            <i class="fas fa-truck"></i>
+                            <h4>Fast Delivery</h4>
+                            <p>Our efficient delivery service ensures your flowers arrive on time and in perfect condition.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box">
+                            <i class="fas fa-heart"></i>
+                            <h4>Customer Care</h4>
+                            <p>Our dedicated team is always ready to assist you with personalized service and care.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 BookayFlorists. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
