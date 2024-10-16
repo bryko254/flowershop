@@ -405,6 +405,28 @@
             fetchBlogs(1, searchTerm);
         });
 
+        
+        // Helper function to sanitize filename
+        function sanitizeFilePath(filePath) {
+            // Split the path into directory and filename
+            let [dir, filename] = filePath.split('/').slice(-2);
+
+            // Remove file extension
+            let [name, ext] = filename.split('.');
+        
+            // Replace spaces and special characters with underscores
+            name = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+            // Remove consecutive underscores
+            name = name.replace(/_+/g, '_');
+        
+            // Trim underscores from start and end
+            name = name.replace(/^_+|_+$/g, '');
+        
+            // Reassemble the sanitized path
+            return `${dir}/${name}.${ext}`;
+        }
+
         // Function to add a new blog
         async function addBlog() {
             const title = document.getElementById('blogTitle').value;
@@ -418,10 +440,14 @@
             }
 
             try {
+                
                 // Upload the image to the Supabase storage
                 const fileExt = blogImageFile.name.split('.').pop();
-                const fileName = `${title}-${Date.now()}.${fileExt}`;
-                const filePath = `blogs/${fileName}`;
+                const unsanitizedFilePath = `blogs/${title}-${Date.now()}.${fileExt}`;
+                // Sanitize the entire file path
+                const filePath = sanitizeFilePath(unsanitizedFilePath);
+                console.log(filePath);
+
 
                 const { data: fileData, error: fileError } = await supabaseClient
                     .storage
