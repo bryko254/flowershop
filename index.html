@@ -89,47 +89,64 @@
             border: 0;
         }
 
-        .marketing-vid {
-        position: relative;
-        height: 50vh; /* Half viewport height */
-        overflow: hidden;
-    }
+        .video-wrapper {
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 12px;
+}
 
-    .video-wrapper {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
+.video-thumbnail {
+    width: 100%;
+    transition: transform 0.3s ease;
+}
 
-    .video-thumbnail {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Cover entire section */
-        filter: brightness(70%); /* Darken for better overlay contrast */
-        transition: filter 0.3s ease;
-    }
+.video-wrapper:hover .video-thumbnail {
+    transform: scale(1.05);
+}
 
-    .play-btn {
-        position: absolute; /* Ensures the button is positioned over the image */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); /* Centers the button */
-        color: white; /* White color for visibility */
-        font-size: 4rem; /* Size of the icon */
-        cursor: pointer; /* Pointer cursor for interactiveness */
-        transition: color 0.3s ease;
-        z-index: 10; /* Ensures the button appears above the video thumbnail */
-        display: flex; /* Ensures flex display for better alignment */
-        align-items: center; /* Centers content vertically */
-        justify-content: center; /* Centers content horizontally */
-        background-color: rgba(0, 0, 0, 0.5); /* Optional: adds a semi-transparent background to the button */
-        border-radius: 50%; /* Makes the play button circular */
-        padding: 20px; /* Adds padding for larger clickable area */
-    }
+.play-btn {
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
 
-    .play-btn:hover {
-        color: #198754; /* Hover color effect */
-    }
+.play-btn-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.play-btn svg {
+    color: #ff4d4d;
+    margin-left: 4px; /* Slight offset for visual balance */
+}
+
+.play-btn:hover .play-btn-circle {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Optional overlay to darken the image slightly */
+.video-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.video-wrapper:hover::after {
+    background: rgba(0, 0, 0, 0.3);
+}
 
     </style>
 </head>
@@ -335,11 +352,11 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/1.png"
+                            <img src="./assets/images/birthday.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Vases</h3>
-                                <p class="mb-0">This is a great product that will add life to your interior.</p>
+                                <h3 class="mb-1">Birthday Bookays</h3>
+                                <p class="mb-0">Send this gorgeous flower arrangement of red roses in a hat box with a happy birthday balloon and have it delivered to the recepient’s</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -347,11 +364,11 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/2.png"
+                            <img src="./assets/images/aniversary.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Gift Cards</h3>
-                                <p class="mb-0">Bring a touch of nature with this beautiful plant.</p>
+                                <h3 class="mb-1">Anniversaries Bookays</h3>
+                                <p class="mb-0">Whether it's your first anniversary or your fiftieth, our floral experts are here to help you select the perfect flowers that tell your unique love story</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -359,11 +376,12 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/3.png"
+                            <img src="./assets/images/thanku.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Bookay</h3>
-                                <p class="mb-0">This plant is perfect for any home or office decor.</p>
+                                <h3 class="mb-1">Thank You Bookays</h3>
+                                <p class="mb-0">Say "Thank You" with Flowers
+                                    When words aren't enough, let flowers speak from your heart. Our carefully crafted thank you bouquets carry your message of appreciation with grace and warmth.</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -373,11 +391,11 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                            <img src="./assets/images/wedding.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Featured Product 4</h3>
-                                <p class="mb-0">Add greenery to your space with this vibrant plant.</p>
+                                <h3 class="mb-1">Wedding Bookays</h3>
+                                <p class="mb-0">Create timeless memories with our exquisitely crafted wedding bouquets, where each bloom is thoughtfully selected to tell your unique love story and perfectly complement your special day, from classic white roses to bespoke seasonal arrangements</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -385,11 +403,11 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                            <img src="./assets/images/valemtine.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Featured Product 5</h3>
-                                <p class="mb-0">Brighten up any room with this stunning plant.</p>
+                                <h3 class="mb-1">Valentine Bookays</h3>
+                                <p class="mb-0">Express your deepest affection with our enchanting Valentine's bouquets, featuring passionate red roses, romantic peonies, and delicate orchids, each arrangement meticulously designed to make your love story bloom on this special day</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -397,11 +415,11 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="featured-card">
-                            <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/our-service/4.png"
+                            <img src="./assets/images/nature.jpg"
                                 alt="Featured Product" class="featured-image">
                             <div class="featured-info">
-                                <h3 class="mb-1">Featured Product 6</h3>
-                                <p class="mb-0">A beautiful addition to any garden or indoor space.</p>
+                                <h3 class="mb-1">Nature Bookays</h3>
+                                <p class="mb-0">Bring the enchanting beauty of the wild indoors with our nature-inspired bouquets, featuring freshly gathered wildflowers, rustic botanicals, and seasonal greenery that capture the untamed elegance of meadows, forests, and garden landscapes</p>
                                 <button class="btn btn-success order-btn mt-2">Order Now</button>
                             </div>
                         </div>
@@ -419,9 +437,9 @@
         </section>
 
         <!-- Marketing Video Section Covering Half Area -->
-        <section class="marketing-vid">
+        <!-- <section class="marketing-vid">
             <div class="video-wrapper position-relative">
-                <img src="https://iamosahan.com/wrapbootstrap-pillarix/flowersx/img/video.jpg" alt="Gardening"
+                <img src="./assets/images/modalvid.jpg" alt="Gardening"
                     class="img-fluid video-thumbnail">
                 <a href="#" class="play-btn position-absolute" data-toggle="modal" data-target="#videoModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor"
@@ -429,6 +447,18 @@
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
                         <path d="M6.271 5.055A.5.5 0 0 1 7 5.5v5a.5.5 0 0 1-.759.429l-3-2.5a.5.5 0 0 1 0-.858l3-2.5z" />
                     </svg>
+                </a>
+            </div>
+        </section> -->
+        <section class="marketing-vid">
+            <div class="video-wrapper position-relative">
+                <img src="./assets/images/modalvid.jpg" alt="Gardening" class="img-fluid video-thumbnail">
+                <a href="#" class="play-btn position-absolute top-50 start-50 translate-middle" data-toggle="modal" data-target="#videoModal">
+                    <div class="play-btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                    </div>
                 </a>
             </div>
         </section>
@@ -529,7 +559,7 @@
                     <div class="modal-body">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe id="videoIframe" class="embed-responsive-item"
-                                src="https://www.youtube.com/embed/e4Tk-kcOmUA"
+                                src="./assets/landscape.mp4"
                                 title="My Ultra Low-Maintenance Garden: The Full Tour" allowfullscreen></iframe>
                         </div>
                     </div>
