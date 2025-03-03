@@ -261,7 +261,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src=""
+                            <img src="./assets/images/Mini Baking-25-background-2.jpg"
                                 alt="Cafe Plants" class="plant-image" id="cat1_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat1"></h3>
@@ -320,7 +320,7 @@
 
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src=""
+                            <img src="./assets/images/flower-on-stand-1.jpg"
                                 alt="Cafe Plants" class="plant-image" id="cat6_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat6"></h3>
@@ -330,7 +330,7 @@
                     </div>
                     <div class="col-sm-12 col-lg-4">
                         <div class="plant-card">
-                            <img src=""
+                            <img src="./assets/images/Bookay-2-valentine.JPG"
                                 alt="Cafe Plants" class="plant-image" id="cat7_img">
                             <div class="plant-info">
                                 <h3 class="mb-1" id="cat7"></h3>
@@ -631,6 +631,11 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkcWF4cWFncXl5bHh2ZGtzbnppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMzkyNjk5NywiZXhwIjoyMDM5NTAyOTk3fQ.BCgpL_7mNghbz_Y7uQgVRhjjIAh5zCuwHKltD3VtZIU'; // Replace this with your actual Supabase key
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+        function showFlashMessage(message, type = 'info') {
+            console.log(`${type.toUpperCase()}: ${message}`);
+            // You could implement a more sophisticated flash message system here
+        }
+
         async function fetchCategories() {
             const { data, error } = await supabaseClient
                 .from('categories')
@@ -643,48 +648,93 @@
                 return;
             }
 
-            if (data.length === 0) {
-                showFlashMessage('No categories found.', 'info');
+            if (!data || data.length === 0) {
+                console.log('No categories found.');
                 return;
             }
 
             console.log(data);
-            // Assuming the first category should replace the Bookays text and the img
-            const firstCategory = data[0];
-            document.getElementById('cat1').textContent = firstCategory.category_name;
-            document.getElementById('cat1_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(firstCategory.category_img).data.publicUrl;
-            document.getElementById('cat1_id').href = `client_categories.html?id=${firstCategory.id}`;
             
+            try {
+                // First category
+                if (data.length > 0) {
+                    const firstCategory = data[0];
+                    document.getElementById('cat1').textContent = firstCategory.category_name;
+                    const firstCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(firstCategory.category_img);
+                    if (firstCategoryUrl && firstCategoryUrl.data) {
+                        document.getElementById('cat1_img').src = firstCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat1_id').href = `client_categories.html?id=${firstCategory.id}`;
+                }
 
-            const secondCategory = data[1];
-            document.getElementById('cat2').textContent = secondCategory.category_name;
-            document.getElementById('cat2_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(secondCategory.category_img).data.publicUrl;
-            document.getElementById('cat2_id').href = `client_categories.html?id=${secondCategory.id}`;
+                // Second category
+                if (data.length > 1) {
+                    const secondCategory = data[1];
+                    document.getElementById('cat2').textContent = secondCategory.category_name;
+                    const secondCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(secondCategory.category_img);
+                    if (secondCategoryUrl && secondCategoryUrl.data) {
+                        document.getElementById('cat2_img').src = secondCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat2_id').href = `client_categories.html?id=${secondCategory.id}`;
+                }
 
-            const thirdCategory = data[2];
-            document.getElementById('cat3').textContent = thirdCategory.category_name;
-            document.getElementById('cat3_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(thirdCategory.category_img).data.publicUrl;
-            document.getElementById('cat3_id').href = `client_categories.html?id=${thirdCategory.id}`;
+                // Third category
+                if (data.length > 2) {
+                    const thirdCategory = data[2];
+                    document.getElementById('cat3').textContent = thirdCategory.category_name;
+                    const thirdCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(thirdCategory.category_img);
+                    if (thirdCategoryUrl && thirdCategoryUrl.data) {
+                        document.getElementById('cat3_img').src = thirdCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat3_id').href = `client_categories.html?id=${thirdCategory.id}`;
+                }
 
-            const fourthCategory = data[3];
-            document.getElementById('cat4').textContent = fourthCategory.category_name;
-            document.getElementById('cat4_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fourthCategory.category_img).data.publicUrl;
-            document.getElementById('cat4_id').href = `client_categories.html?id=${fourthCategory.id}`;
-            
-            const fifthCategory = data[4];
-            document.getElementById('cat5').textContent = fifthCategory.category_name;
-            document.getElementById('cat5_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(fifthCategory.category_img).data.publicUrl;
-            document.getElementById('cat5_id').href = `client_categories.html?id=${fifthCategory.id}`;
+                // Fourth category
+                if (data.length > 3) {
+                    const fourthCategory = data[3];
+                    document.getElementById('cat4').textContent = fourthCategory.category_name;
+                    const fourthCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(fourthCategory.category_img);
+                    if (fourthCategoryUrl && fourthCategoryUrl.data) {
+                        document.getElementById('cat4_img').src = fourthCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat4_id').href = `client_categories.html?id=${fourthCategory.id}`;
+                }
+                
+                // Fifth category
+                if (data.length > 4) {
+                    const fifthCategory = data[4];
+                    document.getElementById('cat5').textContent = fifthCategory.category_name;
+                    const fifthCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(fifthCategory.category_img);
+                    if (fifthCategoryUrl && fifthCategoryUrl.data) {
+                        document.getElementById('cat5_img').src = fifthCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat5_id').href = `client_categories.html?id=${fifthCategory.id}`;
+                }
 
-            const sixthCategory = data[5];
-            document.getElementById('cat6').textContent = sixthCategory.category_name;
-            document.getElementById('cat6_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(sixthCategory.category_img).data.publicUrl;
-            document.getElementById('cat6_id').href = `client_categories.html?id=${sixthCategory.id}`;
+                // Sixth category
+                if (data.length > 5) {
+                    const sixthCategory = data[5];
+                    document.getElementById('cat6').textContent = sixthCategory.category_name;
+                    const sixthCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(sixthCategory.category_img);
+                    if (sixthCategoryUrl && sixthCategoryUrl.data) {
+                        document.getElementById('cat6_img').src = sixthCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat6_id').href = `client_categories.html?id=${sixthCategory.id}`;
+                }
 
-            const seventhCategory = data[6];
-            document.getElementById('cat7').textContent = seventhCategory.category_name;
-            document.getElementById('cat7_img').src = supabaseClient.storage.from('images_flowers').getPublicUrl(seventhCategory.category_img).data.publicUrl;
-            document.getElementById('cat7_id').href = `client_categories.html?id=${seventhCategory.id}`;
+                // Seventh category
+                if (data.length > 6) {
+                    const seventhCategory = data[6];
+                    document.getElementById('cat7').textContent = seventhCategory.category_name;
+                    const seventhCategoryUrl = supabaseClient.storage.from('images_flowers').getPublicUrl(seventhCategory.category_img);
+                    if (seventhCategoryUrl && seventhCategoryUrl.data) {
+                        document.getElementById('cat7_img').src = seventhCategoryUrl.data.publicUrl;
+                    }
+                    document.getElementById('cat7_id').href = `client_categories.html?id=${seventhCategory.id}`;
+                }
+            } catch (err) {
+                console.error('Error processing category data:', err);
+            }
         }
 
         fetchCategories();
