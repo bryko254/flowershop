@@ -88,33 +88,64 @@
 
         .bouquet-builder {
             background-color: #f8f9fa;
+            position: relative;
+            padding-bottom: 250px; /* Add padding to the bottom to make space for the vase */
         }
 
         .bouquet-item {
-            position: relative;
-            margin: 5px;
+            position: absolute;
+            bottom: 100px; /* Adjust as needed */
+            left: 50%;
+            transition: all 0.3s ease-in-out;
         }
 
         .bouquet-item img {
-            width: 80px;
-            height: 80px;
+            width: 120px; /* Adjust as needed */
+            height: 120px; /* Adjust as needed */
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .vase {
+            width: 180px;
+            height: 250px;
+            background: linear-gradient(to bottom, #d3d3d3, #b0b0b0);
+            border-radius: 0 0 60px 60px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .vase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px;
+            right: -10px;
+            height: 20px;
+            background: #c0c0c0;
+            border-radius: 0 0 10px 10px;
         }
 
         .bouquet-item .remove-item {
             position: absolute;
             top: -5px;
             right: -5px;
-            background-color: red;
+            background-color: #dc3545;
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             text-align: center;
-            line-height: 18px;
+            line-height: 28px;
             cursor: pointer;
             font-weight: bold;
+            border: 2px solid white;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -167,8 +198,11 @@
             <div class="card bouquet-builder">
                 <div class="card-body">
                     <h3 class="card-title text-center">Your Bouquet</h3>
-                    <div id="bouquet-items" class="d-flex flex-wrap justify-content-center">
-                        <!-- Selected flowers will appear here -->
+                    <div id="bouquet-items-container" style="position: relative; height: 350px;">
+                        <div id="bouquet-items">
+                            <!-- Selected flowers will appear here -->
+                        </div>
+                        <div class="vase"></div>
                     </div>
                     <hr>
                     <div class="text-center">
@@ -328,13 +362,16 @@
 
             document.querySelector('.bouquet-builder').style.display = 'block';
 
-            bouquet.forEach(item => {
+            bouquet.forEach((item, index) => {
                 total += item.price * item.quantity;
+                const x = Math.random() * 50 - 25;
+                const y = Math.random() * 20;
+                const rotation = Math.random() * 30 - 15;
+
                 const bouquetItem = `
-                    <div class="bouquet-item">
+                    <div class="bouquet-item" style="z-index: ${index}; transform: translate(${x}px, ${y}px) rotate(${rotation}deg);">
                         <img src="${item.imageUrl}" alt="${item.name}">
                         <div class="remove-item" onclick="removeFromBouquet(${item.id})">&times;</div>
-                        <div class="item-quantity">${item.quantity}</div>
                     </div>
                 `;
                 bouquetItemsContainer.innerHTML += bouquetItem;
